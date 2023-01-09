@@ -5,6 +5,11 @@
   become_method: sudo
   become: yes
   tasks:
+    - name: Remove archinstall logs 
+      ansible.builtin.file:
+        path: /var/log/archinstall
+        state: absent
+
     - name: Update and upgrade Arch
       pacman:
         update_cache: yes
@@ -75,6 +80,18 @@
           - nm-connection-editor
           - dust
           - duf
+          - go
+          - gopls
+          - tmux
+          - man-db
+          - man-pages
+          - openbsd-netcat
+          - whois
+          - nodejs-lts-hydrogen
+          - telegram-desktop
+          - docker
+          - docker-compose
+          - firewalld
 
     - name: Install packages from AUR
       kewlfft.aur.aur:
@@ -92,8 +109,22 @@
           - nerd-fonts-complete
           - networkmanager-dispatcher-chrony
           - nwg-bar-bin
+          - nnn-nerd
           - hardened-malloc-git
+          - docker-rootless-extras
       become_user: aur_builder
+
+    - name: Enable remapping user id for Docker rootless
+      ansible.builtin.lineinfile:
+        path: /etc/subuid
+        line: 'kriive:165536:65536'
+        create: yes
+
+    - name: Enable remapping group id for Docker rootless
+      ansible.builtin.lineinfile:
+        path: /etc/subgid
+        line: 'kriive:165536:65536'
+        create: yes
 
     - name: Copy the .config folder
       ansible.builtin.copy:
@@ -170,6 +201,12 @@
         enabled: yes
         state: started
 
+    - name: Enable and start firewalld.service
+      ansible.builtin.systemd:
+        name: firewalld
+        enabled: yes
+        state: started
+
     - name: Enable spotifyd user service
       ansible.builtin.systemd:
         name: spotifyd
@@ -178,10 +215,13 @@
         scope: user
       become_user: kriive
 
-    - name: Remove archinstall logs 
-      ansible.builtin.file:
-        path: /var/log/archinstall
-        state: absent
+    - name: Enable spotifyd user service
+      ansible.builtin.systemd:
+        name: docker
+        enabled: yes
+        state: started
+        scope: user
+      become_user: kriive
 
     - name: Remove the user 'aur_builder'
       ansible.builtin.user:

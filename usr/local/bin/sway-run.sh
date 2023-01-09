@@ -26,6 +26,9 @@ export SSH_AUTH_SOCK
 # This is used by virt-manager to avoid passing Super keybindings to
 # guest VMs.
 export SPICE_NOGRAB=1
+
+# Rootless Docker
+export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"
 	
 exec sway
 

@@ -199,8 +199,7 @@ bar {
   swaybar_command waybar
 }
 
-output * bg ~/.config/wallpaper/libc.png fill
-#output * bg ~/.config/wallpaper/thonk.png fill
+output * bg ~/.config/wallpaper/default fill
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
