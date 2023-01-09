@@ -1,0 +1,46 @@
+{
+    "layer": "top",
+    "position": "top",
+    "modules-left": ["sway/workspaces"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["tray", "network", "battery", "clock", "custom/power"],
+    "sway/window": {
+        "max-length": 50
+    },
+    "network": {
+      "format": "{ifname}",
+      "format-wifi": "  {icon}",
+      "format-ethernet": "{ipaddr}/{cidr} ",
+      "format-disconnected": "", //An empty format will hide the module.
+      "tooltip-format": "{ifname} via {gwaddr} ",
+      "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+      "tooltip-format-ethernet": "{ifname} ",
+      "tooltip-format-disconnected": "Disconnected",
+      "on-click": "footclient -e 'nmtui-connect'",
+      "max-length": 50,
+      "format-icons": [
+      "", 
+      "",
+      "",
+      ""
+      ]
+    },
+    "battery": {
+        "format": "{capacity}% {icon}",
+        "tooltip-format": "{capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "clock": {
+        "interval": 30,
+        "format": "{:%H:%M}",
+        "max-length": 25
+    },
+    "custom/power": {
+      "format": "",
+      "on-click": "nwg-bar -p top -x"
+    },
+    "tray": {
+      "icon-size": 15,
+      "spacing": 10
+    }
+}

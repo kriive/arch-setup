@@ -1,0 +1,55 @@
+@define-color background #0d1014;
+@define-color foreground #eeeeec;
+
+@define-color bright-black #404040;
+@define-color bright-red #ff0000;
+@define-color bright-green #00ff00;
+@define-color bright-yellow #ffff00;
+@define-color bright-blue #11b5f6;
+@define-color bright-magenta #ff00ff;
+@define-color bright-white #ffffff;
+@define-color bright-cyan #00ffff;
+
+@define-color normal-black #000000;
+@define-color normal-red #cd0000;
+@define-color normal-green #00cd00;
+@define-color normal-yellow #cdcd00;
+@define-color normal-blue #1093f5;
+@define-color normal-magenta #cd00cd;
+@define-color normal-white #faebd7;
+@define-color normal-cyan #00cdcd;
+
+
+/* Outer bar container, takes all the window width/height */
+#outer-box {
+	margin: 0px;
+  background-color: @background;
+  font-family: monospace;
+}
+
+/* Inner bar container, surrounds buttons */
+#inner-box {
+	background-color: rgba (0, 0, 0, 0.0);
+	border-style: none;
+	border-width: 1px;
+	border-color: rgba (156, 142, 122, 0.7);
+	padding: 5px;
+	margin: 5px
+}
+
+button, image {
+	background: none;
+	border: none;
+	box-shadow: none
+}
+
+button {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin: 5px
+}
+
+button:hover {
+  border-radius: 0;
+	background-color: rgba (255, 255, 255, 0.1)
+}

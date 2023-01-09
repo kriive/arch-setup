@@ -1,0 +1,52 @@
+{
+    "additional-repositories": [
+        "multilib"
+    ],
+    "archinstall-language": "English",
+    "audio": "pipewire",
+    "bootloader": "systemd-bootctl",
+    "config_version": "2.5.1",
+    "debug": false,
+    "harddrives": [
+        "/dev/nvme0n1"
+    ],
+    "hostname": "k-thinkpad",
+    "kernels": [
+        "linux-hardened"
+    ],
+    "keyboard-layout": "us",
+    "mirror-region": {
+        "Italy": {
+            "http://archlinux.mirror.garr.it/archlinux/$repo/os/$arch": true,
+            "http://archlinux.mirror.server24.net/$repo/os/$arch": true,
+            "http://mirror.spazioincloud.it/archlinux/$repo/os/$arch": true,
+            "https://archlinux.mirror.server24.net/$repo/os/$arch": true,
+            "https://archmirror.it/repos/$repo/os/$arch": true,
+            "https://mirror.spazioincloud.it/archlinux/$repo/os/$arch": true
+        }
+    },
+    "nic": {
+        "dhcp": true,
+        "dns": null,
+        "gateway": null,
+        "iface": null,
+        "ip": null,
+        "type": "nm"
+    },
+    "no_pkg_lookups": false,
+    "ntp": false,
+    "offline": false,
+    "packages": [
+        "ansible"
+    ],
+    "profile": {
+        "path": "/usr/lib/python3.10/site-packages/archinstall/profiles/minimal.py"
+    },
+    "script": "guided",
+    "silent": false,
+    "swap": true,
+    "sys-encoding": "UTF-8",
+    "sys-language": "en_US",
+    "timezone": "Europe/Rome",
+    "version": "2.5.1"
+}

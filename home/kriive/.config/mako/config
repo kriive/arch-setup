@@ -1,0 +1,20 @@
+font=FiraCode Mono
+default-timeout=10000
+border-radius=0
+layer=overlay
+anchor=bottom-right
+
+background-color=#d8d8d8
+text-color=#181818
+border-color=#d8d8d8
+
+[urgency=low]
+background-color=#181818
+text-color=#f7ca88
+border-color=#181818
+
+[urgency=high]
+ignore-timeout=1
+background-color=#181818
+text-color=#ab4642
+border-color=#7cafc2

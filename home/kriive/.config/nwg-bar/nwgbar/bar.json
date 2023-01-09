@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Lock screen",
+    "exec": "/home/kriive/.config/sway/lock.sh",
+    "icon": "/home/kriive/.config/nwg-launchers/nwgbar/img/lock.svg"
+  },
+  {
+    "name": "Logout",
+    "exec": "swaymsg exit",
+    "icon": "/home/kriive/.config/nwg-launchers/nwgbar/img/logout.svg"
+  },
+  {
+    "name": "Reboot",
+    "exec": "systemctl reboot",
+    "icon": "/home/kriive/.config/nwg-launchers/nwgbar/img/reboot.svg"
+  },
+  {
+    "name": "Shutdown",
+    "exec": "systemctl -i poweroff",
+    "icon": "/home/kriive/.config/nwg-launchers/nwgbar/img/shutdown.svg"
+  }
+]

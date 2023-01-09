@@ -1,0 +1,23 @@
+## Base16 Default Dark
+# Author: Chris Kempson (http://chriskempson.com)
+
+set $base00 #001514
+set $base01 #ff3737
+set $base02 #169c16
+set $base03 #9f8500
+set $base04 #5781ef
+set $base05 #da4ebf
+set $base06 #009880
+set $base07 #968282
+set $base08 #261c2c
+set $base09 #f0681a
+set $base0A #3aa73a
+set $base0B #ba8a00
+set $base0C #8887f0
+set $base0D #d85cf2
+set $base0E #1da1af
+set $base0F #a29fa0
+
+
+
+

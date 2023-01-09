@@ -1,0 +1,5 @@
+[options]
+background=282c34
+overlay_font=JetBrainsMono Nerd Font:10
+[binds]
+r = rotate by 90

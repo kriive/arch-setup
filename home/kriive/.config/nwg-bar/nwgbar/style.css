@@ -1,0 +1,57 @@
+@define-color background #0d1014;
+@define-color foreground #eeeeec;
+
+@define-color bright-black #404040;
+@define-color bright-red #ff0000;
+@define-color bright-green #00ff00;
+@define-color bright-yellow #ffff00;
+@define-color bright-blue #11b5f6;
+@define-color bright-magenta #ff00ff;
+@define-color bright-white #ffffff;
+@define-color bright-cyan #00ffff;
+
+@define-color normal-black #000000;
+@define-color normal-red #cd0000;
+@define-color normal-green #00cd00;
+@define-color normal-yellow #cdcd00;
+@define-color normal-blue #1093f5;
+@define-color normal-magenta #cd00cd;
+@define-color normal-white #faebd7;
+@define-color normal-cyan #00cdcd;
+
+
+#bar {
+    font-family: monospace;
+    box-shadow: none;
+    margin: 30px; /* affects top/bottom & left/right alignment */
+}
+
+button, image {
+    background: none;
+    color:#d8d8d8;
+    border-style: none;
+    box-shadow: none;
+}
+
+button {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 5px;
+}
+
+button:hover {
+    box-shadow: none;
+    border-style: none;
+    background-color: #383838;
+}
+
+button:focus {
+    background-color: #181818;
+}
+
+grid {
+    background-color: @bright-red;
+    border-radius: 10px;
+    padding: 5px;
+    /* e.g. for common background to all buttons */
+}
