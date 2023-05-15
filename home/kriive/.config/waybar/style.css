@@ -98,29 +98,31 @@ tooltip label {
     color: @foreground;
 }
 
-#clock, #battery, #custom-power, #tray, #network {
+#clock, #battery, #custom-power, #idle_inhibitor, #tray, #network {
   padding: 0 10px;
   color: @foreground;
 }
 
 #custom-power {
-  color: @bright-yellow;
+  color: @normal-yellow;
 }
 
 #battery.charging {
-    color: @bright-cyan;
+    color: @normal-green;
 }
 
 @keyframes blink {
     to {
-        background-color: #ffffff;
-        color: black;
+        color: @foreground;
     }
 }
 
 #battery.warning:not(.charging) {
-    background: #f53c3c;
-    color: white;
+    color: @bright-yellow;
+}
+
+#battery.critical:not(.charging) {
+    color: #f53c3c;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;

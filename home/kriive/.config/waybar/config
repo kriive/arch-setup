@@ -3,37 +3,55 @@
     "position": "top",
     "modules-left": ["sway/workspaces"],
     "modules-center": ["sway/window"],
-    "modules-right": ["tray", "network", "battery", "clock", "custom/power"],
+    "modules-right": ["tray", "idle_inhibitor", "network", "battery", "clock", "custom/power"],
     "sway/window": {
         "max-length": 50
     },
     "network": {
       "format": "{ifname}",
-      "format-wifi": "  {icon}",
-      "format-ethernet": "{ipaddr}/{cidr} ",
+      "format-wifi": "{icon}",
+      "format-ethernet": "󰈀",
       "format-disconnected": "", //An empty format will hide the module.
       "tooltip-format": "{ifname} via {gwaddr} ",
-      "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-      "tooltip-format-ethernet": "{ifname} ",
+      "tooltip-format-wifi": "{essid} ({signalStrength}%) {icon} - {ipaddr}/{cidr}",
+      "tooltip-format-ethernet": "{ifname}  - {ipaddr}/{cidr}",
       "tooltip-format-disconnected": "Disconnected",
       "on-click": "footclient -e 'nmtui-connect'",
       "max-length": 50,
       "format-icons": [
-      "", 
-      "",
-      "",
-      ""
+      "󰤯", 
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
       ]
     },
     "battery": {
-        "format": "{capacity}% {icon}",
+        "format": "{icon}",
         "tooltip-format": "{capacity}%",
-        "format-icons": ["", "", "", "", ""]
+        "format-warning": "{icon}󰈅",
+        "format-critical": "{icon}󰈅",
+        "format-icons": {
+            "charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"], 
+            "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+        },
+        "states": {
+            "critical": 15,
+            "warning": 30
+        }
     },
     "clock": {
         "interval": 30,
         "format": "{:%H:%M}",
         "max-length": 25
+    },
+	"idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "deactivated": "",
+            "activated": ""
+        },
+        "tooltip": false
     },
     "custom/power": {
       "format": "",
