@@ -78,6 +78,8 @@
           - fisher
           - sbctl
           - nm-connection-editor
+          # This is required to have GNOME Keyring working
+          - nm-applet
           - dust
           - duf
           - go
@@ -92,6 +94,15 @@
           - docker
           - docker-compose
           - firewalld
+          # Enable audio from the laptop speakers
+          - sof-firmware
+          - bluez
+          - bluez-utils
+          - libnotify
+          # Enable
+          - intel-media-driver
+          - yt-dlp
+          - unzip
 
     - name: Install packages from AUR
       kewlfft.aur.aur:
@@ -112,6 +123,7 @@
           - nnn-nerd
           - hardened-malloc-git
           - docker-rootless-extras
+          - chayang
       become_user: aur_builder
 
     - name: Enable remapping user id for Docker rootless
@@ -200,6 +212,20 @@
         name: systemd-resolved
         enabled: yes
         state: started
+
+    - name: Enable and start bluetooth.service
+      ansible.builtin.systemd:
+        name: bluetooth
+        enabled: yes
+        state: started
+
+    - name: Create a symbolic link to /etc/resolv.conf
+      ansible.builtin.file:
+        src: /run/systemd/resolve/stub-resolv.conf
+        dest: /etc/resolv.conf
+        owner: root
+        group: root
+        state: link
 
     - name: Enable and start firewalld.service
       ansible.builtin.systemd:

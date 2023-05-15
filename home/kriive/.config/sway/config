@@ -240,6 +240,9 @@ exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 
+# nm-applet (required to use GNOME Keyring)
+exec nm-applet
+
 output 'Samsung Electric Company U28E570 HTPKA02864' {
     scale 2
     scale_filter nearest
