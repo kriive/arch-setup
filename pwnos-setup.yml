@@ -70,6 +70,7 @@
           - helix
           - gopls
           - clang
+          - greetd
 
     - name: Install packages from AUR
       kewlfft.aur.aur:
@@ -78,7 +79,6 @@
         # TODO: check if needed
         extra_args: "--noprovides"
         name:
-          - greetd
           - greetd-tuigreet
           - nerd-fonts-meta
       become_user: aur_builder
