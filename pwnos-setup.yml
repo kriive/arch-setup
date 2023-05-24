@@ -60,7 +60,6 @@
           - docker
           - docker-compose
           - unzip
-          - nerd-fonts-meta
           - gcc
           - gdb
           - ropr
@@ -68,6 +67,9 @@
           - qemu-full
           - python
           - python-pip
+          - helix
+          - gopls
+          - clang
 
     - name: Install packages from AUR
       kewlfft.aur.aur:
@@ -78,6 +80,7 @@
         name:
           - greetd
           - greetd-tuigreet
+          - nerd-fonts-meta
       become_user: aur_builder
 
     - name: Copy the .config folder
