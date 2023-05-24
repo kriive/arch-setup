@@ -71,6 +71,7 @@
           - gopls
           - clang
           - greetd
+          - greetd-tuigreet
 
     - name: Install packages from AUR
       kewlfft.aur.aur:
@@ -79,7 +80,6 @@
         # TODO: check if needed
         extra_args: "--noprovides"
         name:
-          - greetd-tuigreet
           - nerd-fonts-meta
       become_user: aur_builder
 
