@@ -1,0 +1,148 @@
+---
+- name: kriive thinkpad setup
+  connection: local
+  hosts: localhost
+  become_method: sudo
+  become: yes
+  tasks:
+    - name: Remove archinstall logs 
+      ansible.builtin.file:
+        path: /var/log/archinstall
+        state: absent
+
+    - name: Update and upgrade Arch
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install the base required packages
+      pacman:
+        name:
+          - base-devel
+
+    - name: Create the `aur_builder` user
+      ansible.builtin.user:
+        name: aur_builder
+        create_home: yes
+        group: wheel
+
+    - name: Allow the `aur_builder` user to run `sudo pacman` without a password
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers.d/11-install-aur_builder
+        line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+        create: yes
+        validate: 'visudo -cf %s'
+
+    - name: Install paru using makepkg if it isn't installed already
+      kewlfft.aur.aur:
+        name: paru
+        use: makepkg
+        state: present
+      become_user: aur_builder
+
+    - name: Install various packages
+      pacman:
+        name:
+          - fish
+          - helix
+          - chrony
+          - bat
+          - lsd
+          - ripgrep
+          - rsync
+          - tailscale
+          - fisher
+          - tmux
+          - man-db
+          - man-pages
+          - openbsd-netcat
+          - whois
+          - docker
+          - docker-compose
+          - unzip
+          - nerd-fonts-meta
+          - gcc
+          - gdb
+          - ropr
+          - ghidra
+          - qemu-full
+          - python
+          - python-pip
+
+    - name: Install packages from AUR
+      kewlfft.aur.aur:
+        use: paru
+        aur_only: yes
+        # TODO: check if needed
+        extra_args: "--noprovides"
+        name:
+          - greetd
+          - greetd-tuigreet
+      become_user: aur_builder
+
+    - name: Copy the .config folder
+      ansible.builtin.copy:
+        # Use trailing slash to copy only the content of the folder.
+        src: ./home/kriive/.config/
+        dest: /home/kriive/.config
+        mode: 0744
+        directory_mode: 0700
+        owner: "kriive"
+        group: "kriive"
+
+    - name: Copy the greetd folder to /etc
+      ansible.builtin.copy:
+        src: ./etc/greetd/
+        dest: /etc/greetd
+        mode: 0644
+        directory_mode: 0755
+        owner: "root"
+        group: "root"
+
+    - name: Enable greetd.service
+      ansible.builtin.systemd:
+        name: greetd
+        enabled: yes
+    
+    - name: Disable and stop systemd-timesyncd.service
+      ansible.builtin.systemd:
+        name: systemd-timesyncd
+        state: stopped
+        enabled: no
+
+    - name: Enable and start chronyd.service
+      ansible.builtin.systemd:
+        name: chronyd
+        enabled: yes
+        state: started
+
+    - name: Enable and start systemd-resolved.service
+      ansible.builtin.systemd:
+        name: systemd-resolved
+        enabled: yes
+        state: started
+
+    - name: Create a symbolic link to /etc/resolv.conf
+      ansible.builtin.file:
+        src: /run/systemd/resolve/stub-resolv.conf
+        dest: /etc/resolv.conf
+        owner: root
+        group: root
+        state: link
+
+    - name: Enable docker service
+      ansible.builtin.systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Remove the user 'aur_builder'
+      ansible.builtin.user:
+        name: aur_builder
+        state: absent
+        remove: yes
+
+    - name: Remove sudoer file for aur_builder
+      ansible.builtin.file:
+        path: /etc/sudoers.d/11-install-aur_builder
+        state: absent
