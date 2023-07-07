@@ -69,6 +69,8 @@
           - ripgrep
           - rsync
           - tailscale
+          - greetd
+          - greetd-tuigreet
           - gnome-keyring
           - mpv
           - zathura
@@ -79,7 +81,7 @@
           - sbctl
           - nm-connection-editor
           # This is required to have GNOME Keyring working
-          - nm-applet
+          - network-manager-applet
           - dust
           - duf
           - go
@@ -111,19 +113,16 @@
         # TODO: check if needed
         extra_args: "--noprovides"
         name:
-          - wob-git
           - tofi
           - wlsunset
-          - greetd
-          - greetd-tuigreet
           - autotiling
-          - nerd-fonts-complete
+          - nerd-fonts-meta
           - networkmanager-dispatcher-chrony
           - nwg-bar-bin
           - nnn-nerd
           - hardened-malloc-git
           - docker-rootless-extras
-          - chayang
+          - chayang-git
       become_user: aur_builder
 
     - name: Enable remapping user id for Docker rootless
@@ -219,6 +218,11 @@
         enabled: yes
         state: started
 
+    - name: Remove /etc/resolv.conf
+      ansible.builtin.file:
+        path: /etc/resolv.conf
+        state: absent
+  
     - name: Create a symbolic link to /etc/resolv.conf
       ansible.builtin.file:
         src: /run/systemd/resolve/stub-resolv.conf
