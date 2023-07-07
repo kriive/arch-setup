@@ -64,6 +64,7 @@
           - helix
           - spotifyd
           - firefox
+          - seahorse
           - bat
           - lsd
           - ripgrep
