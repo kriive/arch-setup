@@ -21,13 +21,30 @@ exec foot --server
 # Autotiling
 exec autotiling
 
-# Wob stuff
-exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
-
 set $menu tofi-drun | xargs swaymsg exec --
 
-set $lock_path lock.sh
-set $idle_path idle.sh
+# swayosd
+exec swayosd
+
+# Sink volume raise
+bindsym XF86AudioRaiseVolume exec swayosd --output-volume raise
+# Sink volume lower
+bindsym XF86AudioLowerVolume exec  swayosd --output-volume lower
+# Sink volume toggle mute
+bindsym XF86AudioMute exec swayosd --output-volume mute-toggle
+# Source volume toggle mute
+bindsym XF86AudioMicMute exec swayosd --input-volume mute-toggle
+
+# Capslock
+bindsym --release Caps_Lock exec swayosd --caps-lock
+
+# Brightness raise
+bindsym XF86MonBrightnessUp exec swayosd --brightness raise
+# Brightness lower
+bindsym XF86MonBrightnessDown exec swayosd --brightness lower
+
+set $lock_path /usr/local/bin/lock.sh
+set $idle_path /usr/local/bin/idle.sh
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -209,11 +226,6 @@ client.unfocused        $base01 $base00 $base05 $base01 $base01
 client.urgent           $base08 $base08 $base00 $base08 $base08
 client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
-
-# Multimedia
-bindsym XF86AudioRaiseVolume exec pamixer -ui 2 && pamixer --get-volume > $SWAYSOCK.wob
-bindsym XF86AudioLowerVolume exec pamixer -ud 2 && pamixer --get-volume > $SWAYSOCK.wob
-bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume > $SWAYSOCK.wob
 
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next

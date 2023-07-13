@@ -6,7 +6,7 @@ padding-left = 35%
 padding-top = 30%
 result-spacing = 25
 num-results = 5
-font = /usr/share/fonts/nerd-fonts-complete/TTF/JetBrains Mono Regular Nerd Font Complete.ttf
+font = /usr/share/fonts/TTF/JetBrainsMonoNerdFont-Regular.ttf
 prompt-text=""
 
 background-color = #111416

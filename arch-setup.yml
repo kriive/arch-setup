@@ -106,6 +106,59 @@
           - intel-media-driver
           - yt-dlp
           - unzip
+          # Nerd fonts
+          - otf-aurulent-nerd
+          - otf-codenewroman-nerd
+          - otf-comicshanns-nerd
+          - otf-droid-nerd
+          - otf-firamono-nerd
+          - otf-hasklig-nerd
+          - otf-hermit-nerd
+          - otf-opendyslexic-nerd
+          - otf-overpass-nerd
+          - ttf-3270-nerd
+          - ttf-agave-nerd
+          - ttf-anonymouspro-nerd
+          - ttf-arimo-nerd
+          - ttf-bigblueterminal-nerd
+          - ttf-bitstream-vera-mono-nerd
+          - ttf-cascadia-code-nerd
+          - ttf-cousine-nerd
+          - ttf-daddytime-mono-nerd
+          - ttf-dejavu-nerd
+          - ttf-fantasque-nerd
+          - ttf-firacode-nerd
+          - ttf-go-nerd
+          - ttf-hack-nerd
+          - ttf-heavydata-nerd
+          - ttf-iawriter-nerd
+          - ttf-ibmplex-mono-nerd
+          - ttf-inconsolata-go-nerd
+          - ttf-inconsolata-lgc-nerd
+          - ttf-inconsolata-nerd
+          - ttf-iosevka-nerd
+          - ttf-iosevkaterm-nerd
+          - ttf-jetbrains-mono-nerd
+          - ttf-lekton-nerd
+          - ttf-liberation-mono-nerd
+          - ttf-lilex-nerd
+          - ttf-meslo-nerd
+          - ttf-monofur-nerd
+          - ttf-monoid-nerd
+          - ttf-mononoki-nerd
+          - ttf-mplus-nerd
+          - ttf-noto-nerd
+          - ttf-profont-nerd
+          - ttf-proggyclean-nerd
+          - ttf-roboto-mono-nerd
+          - ttf-sharetech-mono-nerd
+          - ttf-sourcecodepro-nerd
+          - ttf-space-mono-nerd
+          - ttf-terminus-nerd
+          - ttf-tinos-nerd
+          - ttf-ubuntu-mono-nerd
+          - ttf-ubuntu-nerd
+          - ttf-victor-mono-nerd
 
     - name: Install packages from AUR
       kewlfft.aur.aur:
@@ -117,10 +170,10 @@
           - tofi
           - wlsunset
           - autotiling
-          - nerd-fonts-meta
           - networkmanager-dispatcher-chrony
           - nwg-bar-bin
           - nnn-nerd
+          - swayosd-git
           - hardened-malloc-git
           - docker-rootless-extras
           - chayang-git
@@ -184,11 +237,11 @@
         mode: 0755
         directory_mode: 0755
 
-    - name: Enable hardened_malloc globally
-      ansible.builtin.lineinfile:
-        path: /etc/ld.so.preload
-        line: '/usr/lib/libhardened_malloc.so'
-        create: yes
+    # - name: Enable hardened_malloc globally
+    #   ansible.builtin.lineinfile:
+    #     path: /etc/ld.so.preload
+    #     line: '/usr/lib/libhardened_malloc.so'
+    #     create: yes
 
     - name: Enable greetd.service
       ansible.builtin.systemd:
