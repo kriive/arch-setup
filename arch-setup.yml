@@ -201,6 +201,15 @@
         owner: "kriive"
         group: "kriive"
 
+    - name: Copy the ssh config file
+      ansible.builtin.copy:
+        # Use trailing slash to copy only the content of the folder.
+        src: ./home/kriive/.ssh/config
+        dest: /home/kriive/.ssh/config
+        mode: 0644
+        owner: "kriive"
+        group: "kriive"
+
     - name: Copy the greetd folder to /etc
       ansible.builtin.copy:
         src: ./etc/greetd/
