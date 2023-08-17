@@ -24,24 +24,24 @@ exec autotiling
 set $menu tofi-drun | xargs swaymsg exec --
 
 # swayosd
-exec swayosd
+exec swayosd-server
 
 # Sink volume raise
-bindsym XF86AudioRaiseVolume exec swayosd --output-volume raise
+bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume raise
 # Sink volume lower
-bindsym XF86AudioLowerVolume exec  swayosd --output-volume lower
+bindsym XF86AudioLowerVolume exec  swayosd-client --output-volume lower
 # Sink volume toggle mute
-bindsym XF86AudioMute exec swayosd --output-volume mute-toggle
+bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
 # Source volume toggle mute
-bindsym XF86AudioMicMute exec swayosd --input-volume mute-toggle
+bindsym XF86AudioMicMute exec swayosd-client --input-volume mute-toggle
 
 # Capslock
-bindsym --release Caps_Lock exec swayosd --caps-lock
+bindsym --release Caps_Lock exec swayosd-client --caps-lock
 
 # Brightness raise
-bindsym XF86MonBrightnessUp exec swayosd --brightness raise
+bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
 # Brightness lower
-bindsym XF86MonBrightnessDown exec swayosd --brightness lower
+bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower
 
 set $lock_path /usr/local/bin/lock.sh
 set $idle_path /usr/local/bin/idle.sh
@@ -216,7 +216,8 @@ bar {
   swaybar_command waybar
 }
 
-output * bg ~/.config/wallpaper/default fill
+#output * bg ~/.config/wallpaper/default fill
+output * bg #111416 solid_color
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
