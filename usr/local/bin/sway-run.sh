@@ -19,9 +19,7 @@ fi
 
 export MOZ_ENABLE_WAYLAND=1
 
-# Start the GNOME Keyring Daemon
-eval $(gnome-keyring-daemon --start)
-export SSH_AUTH_SOCK
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 
 # This is used by virt-manager to avoid passing Super keybindings to
 # guest VMs.

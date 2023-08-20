@@ -15,9 +15,6 @@ set $right l
 # Your preferred terminal emulator
 set $term footclient
 
-# Start foot server
-exec foot --server
-
 # Autotiling
 exec autotiling
 
@@ -241,9 +238,6 @@ default_border pixel 1
 hide_edge_borders smart
 
 mouse_warping container
-
-# Notifications
-exec mako
 
 # wlsunset
 exec wlsunset -l 44.8 -L 10.33

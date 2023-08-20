@@ -159,6 +159,9 @@
           - ttf-ubuntu-mono-nerd
           - ttf-ubuntu-nerd
           - ttf-victor-mono-nerd
+          # Install virt-manager and qemu
+          - virt-manager
+          - qemu-desktop
 
     - name: Install packages from AUR
       kewlfft.aur.aur:
@@ -246,6 +249,14 @@
         mode: 0755
         directory_mode: 0755
 
+    - name: Copy greetd config utilities
+      ansible.builtin.copy:
+        src: ./etc/pam.d/greetd
+        dest: /etc/pam.d/greetd
+        owner: root
+        group: root
+        mode: 0644
+
     # - name: Enable hardened_malloc globally
     #   ansible.builtin.lineinfile:
     #     path: /etc/ld.so.preload
@@ -308,9 +319,41 @@
         scope: user
       become_user: kriive
 
+    - name: Enable gcr ssh user socket
+      ansible.builtin.systemd:
+        name: gcr-ssh-agent.socket
+        enabled: yes
+        state: started
+        scope: user
+      become_user: kriive
+
+    - name: Enable gcr ssh user service
+      ansible.builtin.systemd:
+        name: gcr-ssh-agent.service
+        enabled: yes
+        state: started
+        scope: user
+      become_user: kriive
+
     - name: Enable spotifyd user service
       ansible.builtin.systemd:
         name: docker
+        enabled: yes
+        state: started
+        scope: user
+      become_user: kriive
+
+    - name: Enable mako service
+      ansible.builtin.systemd:
+        name: mako
+        enabled: yes
+        state: started
+        scope: user
+      become_user: kriive
+
+    - name: Enable foot server user service
+      ansible.builtin.systemd:
+        name: foot-server
         enabled: yes
         state: started
         scope: user
