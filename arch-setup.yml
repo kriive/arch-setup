@@ -106,6 +106,8 @@
           - intel-media-driver
           - yt-dlp
           - unzip
+          # fwupd
+          - fwupd
           # Nerd fonts
           - otf-aurulent-nerd
           - otf-codenewroman-nerd
