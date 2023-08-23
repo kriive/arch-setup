@@ -35,7 +35,7 @@ restic -r "$RESTIC_REPO" \
 restic -r "$RESTIC_REPO" \
        forget \
        --verbose \
-       --tag $BACKUP_TAG \
+       --tag "$BACKUP_TAG" \
        --prune \
        --keep-daily "$RETENTION_DAYS" \
        --keep-weekly "$RETENTION_WEEKS" \
