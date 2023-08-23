@@ -206,6 +206,11 @@
         owner: "kriive"
         group: "kriive"
 
+    - name: Create .ssh if not present
+      file:
+        path: /home/kriive/.ssh
+        state: directory
+
     - name: Copy the ssh config file
       ansible.builtin.copy:
         # Use trailing slash to copy only the content of the folder.
@@ -242,7 +247,7 @@
         owner: "root"
         group: "root"
 
-    - name: Copy sway utilities to /usr/local/bin
+    - name: Copy utilities to /usr/local/bin
       ansible.builtin.copy:
         src: ./usr/local/bin/
         dest: /usr/local/bin
@@ -332,6 +337,15 @@
     - name: Enable gcr ssh user service
       ansible.builtin.systemd:
         name: gcr-ssh-agent.service
+        enabled: yes
+        state: started
+        scope: user
+      become_user: kriive
+
+    - name: Enable backup user timer
+      ansible.builtin.systemd:
+        name: backup.timer
+        daemon_reload: true
         enabled: yes
         state: started
         scope: user

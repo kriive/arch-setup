@@ -1,0 +1,11 @@
+[Unit]
+Description=Backup files automatically
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/restic.sh
+Environment=BUCKET_URL="https://s3.eu-central-2.wasabisys.com"
+Environment=BUCKET_NAME="kriive-thinkpad"
+Environment=BACKUP_PATH="/home/kriive"
+Environment=BACKUP_TAG="systemd-thinkpad-auto-backup"

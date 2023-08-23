@@ -1,0 +1,10 @@
+$HOME/*
+!$HOME/projects
+!$HOME/.ssh
+!$HOME/.gnupg
+# [...]
+node_modules
+*~
+*.o
+*.lo
+*.pyc
