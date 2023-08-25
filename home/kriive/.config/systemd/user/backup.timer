@@ -1,7 +1,5 @@
 [Unit]
 Description=Run backup daily
-Requires=gnome-keyring-daemon.service
-After=gnome-keyring-daemon.service
 
 [Timer]
 OnCalendar=daily

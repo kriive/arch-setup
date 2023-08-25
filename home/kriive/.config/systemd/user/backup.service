@@ -1,6 +1,10 @@
 [Unit]
 Description=Backup files automatically
-After=network.target
+StartLimitIntervalSec=3600
+StartLimitBurst=10
+Requires=gnome-keyring-daemon.service
+After=network-online.target gnome-keyring-daemon.service
+Wants=network-online.target
 
 [Service]
 Type=simple
@@ -9,3 +13,4 @@ Environment=BUCKET_URL="https://s3.eu-central-2.wasabisys.com"
 Environment=BUCKET_NAME="kriive-thinkpad"
 Environment=BACKUP_PATH="/home/kriive"
 Environment=BACKUP_TAG="systemd-thinkpad-auto-backup"
+Restart=on-failure

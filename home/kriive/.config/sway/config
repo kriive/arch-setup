@@ -18,6 +18,9 @@ set $term footclient
 # Autotiling
 exec autotiling
 
+# foot-server
+exec foot -s
+
 set $menu tofi-drun | xargs swaymsg exec --
 
 # swayosd
