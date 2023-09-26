@@ -63,6 +63,9 @@ input "1739:0:Synaptics_TM3471-020" {
     click_method clickfinger
 }
 
+bindgesture swipe:right workspace prev
+bindgesture swipe:left workspace next
+
 ### Key bindings
 #
 # Basics:
