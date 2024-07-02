@@ -56,13 +56,12 @@
           - slurp
           - grim
           - mako
-          - light
           - pamixer
           - playerctl
           - ttf-joypixels
           - fish
+          - plymouth
           - helix
-          - spotifyd
           - firefox
           - seahorse
           - bat
@@ -92,7 +91,6 @@
           - man-pages
           - openbsd-netcat
           - whois
-          - nodejs-lts-hydrogen
           - telegram-desktop
           - docker
           - docker-compose
@@ -109,61 +107,11 @@
           # fwupd
           - fwupd
           # Nerd fonts
-          - otf-aurulent-nerd
-          - otf-codenewroman-nerd
-          - otf-comicshanns-nerd
-          - otf-droid-nerd
-          - otf-firamono-nerd
-          - otf-hasklig-nerd
-          - otf-hermit-nerd
-          - otf-opendyslexic-nerd
-          - otf-overpass-nerd
-          - ttf-3270-nerd
-          - ttf-agave-nerd
-          - ttf-anonymouspro-nerd
-          - ttf-arimo-nerd
-          - ttf-bigblueterminal-nerd
-          - ttf-bitstream-vera-mono-nerd
-          - ttf-cascadia-code-nerd
-          - ttf-cousine-nerd
-          - ttf-daddytime-mono-nerd
-          - ttf-dejavu-nerd
-          - ttf-fantasque-nerd
-          - ttf-firacode-nerd
-          - ttf-go-nerd
-          - ttf-hack-nerd
-          - ttf-heavydata-nerd
-          - ttf-iawriter-nerd
-          - ttf-ibmplex-mono-nerd
-          - ttf-inconsolata-go-nerd
-          - ttf-inconsolata-lgc-nerd
-          - ttf-inconsolata-nerd
-          - ttf-iosevka-nerd
-          - ttf-iosevkaterm-nerd
           - ttf-jetbrains-mono-nerd
-          - ttf-lekton-nerd
-          - ttf-liberation-mono-nerd
-          - ttf-lilex-nerd
-          - ttf-meslo-nerd
-          - ttf-monofur-nerd
-          - ttf-monoid-nerd
-          - ttf-mononoki-nerd
-          - ttf-mplus-nerd
-          - ttf-noto-nerd
-          - ttf-profont-nerd
-          - ttf-proggyclean-nerd
-          - ttf-roboto-mono-nerd
-          - ttf-sharetech-mono-nerd
-          - ttf-sourcecodepro-nerd
-          - ttf-space-mono-nerd
-          - ttf-terminus-nerd
-          - ttf-tinos-nerd
-          - ttf-ubuntu-mono-nerd
-          - ttf-ubuntu-nerd
-          - ttf-victor-mono-nerd
           # Install virt-manager and qemu
           - virt-manager
           - qemu-desktop
+          - wlsunset
 
     - name: Install packages from AUR
       kewlfft.aur.aur:
@@ -173,7 +121,7 @@
         extra_args: "--noprovides"
         name:
           - tofi
-          - wlsunset
+          - autologin
           - autotiling
           - networkmanager-dispatcher-chrony
           - nwg-bar-bin
@@ -229,10 +177,27 @@
         owner: "root"
         group: "root"
 
+    - name: Copy the plymouth folder to /etc
+      ansible.builtin.copy:
+        src: ./etc/plymouth/
+        dest: /etc/plymouth
+        mode: 0644
+        directory_mode: 0755
+        owner: "root"
+ 
     - name: Copy chrony.conf to /etc/chrony.conf
       ansible.builtin.copy:
         src: ./etc/chrony.conf
         dest: /etc/chrony.conf
+        mode: 0644
+        directory_mode: 0755
+        owner: "root"
+        group: "root"
+
+    - name: Copy mkinitcpio.conf to /etc/mkinitcpio.conf
+      ansible.builtin.copy:
+        src: ./etc/mkinitcpio.conf
+        dest: /etc/mkinitcpio.conf
         mode: 0644
         directory_mode: 0755
         owner: "root"
@@ -270,9 +235,9 @@
     #     line: '/usr/lib/libhardened_malloc.so'
     #     create: yes
 
-    - name: Enable greetd.service
+    - name: Enable autologin.service
       ansible.builtin.systemd:
-        name: greetd
+        name: autologin
         enabled: yes
     
     - name: Disable and stop systemd-timesyncd.service
@@ -318,13 +283,13 @@
         enabled: yes
         state: started
 
-    - name: Enable spotifyd user service
-      ansible.builtin.systemd:
-        name: spotifyd
-        enabled: yes
-        state: started
-        scope: user
-      become_user: kriive
+    # - name: Enable spotifyd user service
+    #   ansible.builtin.systemd:
+    #     name: spotifyd
+    #     enabled: yes
+    #     state: started
+    #     scope: user
+    #   become_user: kriive
 
     - name: Enable gcr ssh user socket
       ansible.builtin.systemd:

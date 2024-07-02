@@ -12,6 +12,9 @@ These scripts use `linux-hardened` as kernel and `hardened_malloc` as memory all
 ### Disk encryption
 Full Disk Encryption is enabled using LUKS + btrfs.
 
+### cmdline
+Change it to `quiet splash rd.luks.name=fd7f499d-c224-4cdc-adc8-24096a16bdf4=root root=/dev/mapper/root rw rootfstype=ext4`
+
 ### Secure boot
 These scripts don't cover that, but I also manually configure Secure Boot with `sbctl`, 
 to account for Evil Maid attacks (w/ Microsoft keys, because I already bricked a laptop
