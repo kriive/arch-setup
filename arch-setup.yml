@@ -83,6 +83,8 @@
           - dust
           - duf
           - go
+          - greetd
+          - greetd-tuigreet
           - gopls
           - tmux
           - man-db
@@ -98,8 +100,8 @@
           - bluez
           - bluez-utils
           - libnotify
-          # Enable
           - intel-media-driver
+          - vulkan-intel
           - yt-dlp
           - unzip
           # fwupd
@@ -119,7 +121,6 @@
         extra_args: "--noprovides"
         name:
           - tofi
-          - autologin
           - autotiling
           - networkmanager-dispatcher-chrony
           - nwg-bar-bin
@@ -166,14 +167,14 @@
         owner: "kriive"
         group: "kriive"
 
-    # - name: Copy the greetd folder to /etc
-    #   ansible.builtin.copy:
-    #     src: ./etc/greetd/
-    #     dest: /etc/greetd
-    #     mode: 0644
-    #     directory_mode: 0755
-    #     owner: "root"
-    #     group: "root"
+    - name: Copy the greetd folder to /etc
+      ansible.builtin.copy:
+        src: ./etc/greetd/
+        dest: /etc/greetd
+        mode: 0644
+        directory_mode: 0755
+        owner: "root"
+        group: "root"
 
     - name: Copy the plymouth folder to /etc
       ansible.builtin.copy:
@@ -219,10 +220,10 @@
         mode: 0755
         directory_mode: 0755
 
-    - name: Copy autologin pam module
+    - name: Copy greetd pam module
       ansible.builtin.copy:
-        src: ./etc/pam.d/autologin
-        dest: /etc/pam.d/autologin
+        src: ./etc/pam.d/greetd
+        dest: /etc/pam.d/greetd
         owner: root
         group: root
         mode: 0644
@@ -339,42 +340,42 @@
         state: absent
         remove: yes
 
-    - name: Create override folder for autologin
-      file:
-        owner: root
-        group: root
-        mode: 0755
-        path: /etc/systemd/system/autologin.service.d
-        state: directory
+    # - name: Create override folder for autologin
+    #   file:
+    #     owner: root
+    #     group: root
+    #     mode: 0755
+    #     path: /etc/systemd/system/autologin.service.d
+    #     state: directory
         
-    - name: Install override for autologin
-      ini_file:
-        dest: /etc/systemd/system/autologin.service.d/override.conf
-        owner: root
-        group: root
-        mode: 0644
-        section: Service
-        option: ExecStart
-        value: ""
+    # - name: Install override for autologin
+    #   ini_file:
+    #     dest: /etc/systemd/system/autologin.service.d/override.conf
+    #     owner: root
+    #     group: root
+    #     mode: 0644
+    #     section: Service
+    #     option: ExecStart
+    #     value: ""
 
-    - name: Install override for autologin
-      ini_file:
-        dest: /etc/systemd/system/autologin.service.d/override.conf
-        owner: root
-        group: root
-        mode: 0644
-        exclusive: false
-        section: Service
-        option: ExecStart
-        value: "autologin kriive /usr/local/bin/sway-run.sh"
+    # - name: Install override for autologin
+    #   ini_file:
+    #     dest: /etc/systemd/system/autologin.service.d/override.conf
+    #     owner: root
+    #     group: root
+    #     mode: 0644
+    #     exclusive: false
+    #     section: Service
+    #     option: ExecStart
+    #     value: "autologin kriive /usr/local/bin/sway-run.sh"
 
-    - name: Enable autologin.service
-      ansible.builtin.systemd:
-        name: autologin
-        enabled: yes
+    # - name: Enable autologin.service
+    #   ansible.builtin.systemd:
+    #     name: autologin
+    #     enabled: yes
 
     - name: Get UUID for main hard disk
-      ansible.builtin.command: lsblk /dev/nvme0n1p2 -no UUID
+      ansible.builtin.command: blkid /dev/nvme0n1p2 -s UUID -o value
       register: uuid
 
     - name: Write cmdline
