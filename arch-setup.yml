@@ -55,6 +55,7 @@
           - wl-clipboard
           - slurp
           - grim
+          - restic
           - mako
           - pamixer
           - playerctl
@@ -69,8 +70,6 @@
           - ripgrep
           - rsync
           - tailscale
-          - greetd
-          - greetd-tuigreet
           - gnome-keyring
           - mpv
           - zathura
@@ -78,7 +77,6 @@
           - imv
           - chrony
           - fisher
-          - sbctl
           - nm-connection-editor
           # This is required to have GNOME Keyring working
           - network-manager-applet
@@ -168,14 +166,14 @@
         owner: "kriive"
         group: "kriive"
 
-    - name: Copy the greetd folder to /etc
-      ansible.builtin.copy:
-        src: ./etc/greetd/
-        dest: /etc/greetd
-        mode: 0644
-        directory_mode: 0755
-        owner: "root"
-        group: "root"
+    # - name: Copy the greetd folder to /etc
+    #   ansible.builtin.copy:
+    #     src: ./etc/greetd/
+    #     dest: /etc/greetd
+    #     mode: 0644
+    #     directory_mode: 0755
+    #     owner: "root"
+    #     group: "root"
 
     - name: Copy the plymouth folder to /etc
       ansible.builtin.copy:
@@ -221,10 +219,10 @@
         mode: 0755
         directory_mode: 0755
 
-    - name: Copy greetd config utilities
+    - name: Copy autologin pam module
       ansible.builtin.copy:
-        src: ./etc/pam.d/greetd
-        dest: /etc/pam.d/greetd
+        src: ./etc/pam.d/autologin
+        dest: /etc/pam.d/autologin
         owner: root
         group: root
         mode: 0644
@@ -234,12 +232,7 @@
     #     path: /etc/ld.so.preload
     #     line: '/usr/lib/libhardened_malloc.so'
     #     create: yes
-
-    - name: Enable autologin.service
-      ansible.builtin.systemd:
-        name: autologin
-        enabled: yes
-    
+   
     - name: Disable and stop systemd-timesyncd.service
       ansible.builtin.systemd:
         name: systemd-timesyncd
@@ -316,7 +309,7 @@
         scope: user
       become_user: kriive
 
-    - name: Enable spotifyd user service
+    - name: Enable docker user service
       ansible.builtin.systemd:
         name: docker
         enabled: yes
@@ -345,6 +338,61 @@
         name: aur_builder
         state: absent
         remove: yes
+
+    - name: Create override folder for autologin
+      file:
+        owner: root
+        group: root
+        mode: 0755
+        path: /etc/systemd/system/autologin.service.d
+        state: directory
+        
+    - name: Install override for autologin
+      ini_file:
+        dest: /etc/systemd/system/autologin.service.d/override.conf
+        owner: root
+        group: root
+        mode: 0644
+        section: Service
+        option: ExecStart
+        value: ""
+
+    - name: Install override for autologin
+      ini_file:
+        dest: /etc/systemd/system/autologin.service.d/override.conf
+        owner: root
+        group: root
+        mode: 0644
+        exclusive: false
+        section: Service
+        option: ExecStart
+        value: "autologin kriive /usr/local/bin/sway-run.sh"
+
+    - name: Enable autologin.service
+      ansible.builtin.systemd:
+        name: autologin
+        enabled: yes
+
+    - name: Get UUID for main hard disk
+      ansible.builtin.command: lsblk /dev/nvme0n1p2 -no UUID
+      register: uuid
+
+    - name: Write cmdline
+      ansible.builtin.copy:
+        dest: /etc/kernel/cmdline
+        content: "quiet splash rd.luks.name={{ uuid.stdout.split()[0] }}=root root=/dev/mapper/root rw rootfstype=ext4"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Recreate initcpio
+      ansible.builtin.command: mkinitcpio -P
+
+    - name: Adding kriive to video group
+      ansible.builtin.user:
+        name: kriive
+        groups: video
+        append: yes
 
     - name: Remove sudoer file for aur_builder
       ansible.builtin.file:
