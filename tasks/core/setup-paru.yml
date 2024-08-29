@@ -1,0 +1,26 @@
+---
+- name: Install base-devel.
+  community.general.pacman:
+    name:
+      - base-devel
+  become: yes
+
+- name: Create temporary build directory.
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: build-paru
+  register: build_directory
+    
+- name: Download `paru-bin`.
+  ansible.builtin.git:
+    repo: 'https://aur.archlinux.org/paru-bin.git'
+    depth: 1
+    dest: "{{ build_directory.path }}"
+
+- name: Install `paru-bin` using `makepkg`.
+  ansible.builtin.command: 
+    cmd: makepkg -si
+    creates: /usr/bin/paru
+  become_user: aur_builder
+  args:
+    chdir: "{{ build_directory.path }}"

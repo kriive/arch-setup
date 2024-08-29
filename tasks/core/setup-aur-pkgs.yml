@@ -1,0 +1,9 @@
+---
+- name: Install packages from AUR
+  kewlfft.aur.aur:
+    use: paru
+    aur_only: yes
+    # TODO: check if needed
+    extra_args: "--noprovides"
+    name: "{{ aur_pkgs }}"
+  become_user: aur_builder

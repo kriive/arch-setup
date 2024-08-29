@@ -1,0 +1,143 @@
+---
+- name: Copy the greetd folder to /etc.
+  ansible.builtin.copy:
+    src: ./etc/greetd/
+    dest: /etc/greetd
+    mode: 0644
+    directory_mode: 0755
+    owner: "root"
+    group: "root"
+  become: yes
+
+- name: Copy chrony.conf to /etc/chrony.conf.
+  ansible.builtin.copy:
+    src: ./etc/chrony.conf
+    dest: /etc/chrony.conf
+    mode: 0644
+    directory_mode: 0755
+    owner: "root"
+    group: "root"
+  become: yes
+
+- name: Copy resolved.conf to /etc/systemd/resolved.conf.
+  ansible.builtin.copy:
+    src: ./etc/systemd/resolved.conf
+    dest: /etc/systemd/resolved.conf
+    mode: 0644
+    directory_mode: 0755
+    owner: "root"
+    group: "root"
+  become: yes
+
+- name: Copy utilities to /usr/local/bin.
+  ansible.builtin.copy:
+    src: ./usr/local/bin/
+    dest: /usr/local/bin
+    owner: root
+    group: root
+    mode: 0755
+    directory_mode: 0755
+  become: yes
+
+- name: Copy greetd pam module.
+  ansible.builtin.copy:
+    src: ./etc/pam.d/greetd
+    dest: /etc/pam.d/greetd
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Adding user to video group
+  ansible.builtin.user:
+    name: "{{ user_name }}"
+    groups: video
+    append: yes
+  become: yes
+
+- name: Disable and stop systemd-timesyncd.service.
+  ansible.builtin.systemd:
+    name: systemd-timesyncd
+    state: stopped
+    enabled: no
+  become: yes
+
+- name: Enable and start chronyd.service.
+  ansible.builtin.systemd:
+    name: chronyd
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Enable and start systemd-resolved.service.
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Enable and start bluetooth.service.
+  ansible.builtin.systemd:
+    name: bluetooth
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Remove /etc/resolv.conf.
+  ansible.builtin.file:
+    path: /etc/resolv.conf
+    state: absent
+  become: yes
+
+- name: Create a symbolic link to /etc/resolv.conf.
+  ansible.builtin.file:
+    src: /run/systemd/resolve/stub-resolv.conf
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    state: link
+  become: yes
+
+- name: Enable and start firewalld.service.
+  ansible.builtin.systemd:
+    name: firewalld
+    enabled: yes
+    state: started
+  become: yes
+
+- name: Copy the plymouth folder to /etc
+  ansible.builtin.copy:
+    src: ./etc/plymouth/
+    dest: /etc/plymouth
+    mode: 0644
+    directory_mode: 0755
+    owner: "root"
+  become: yes
+
+- name: Copy mkinitcpio.conf to /etc/mkinitcpio.conf
+  ansible.builtin.copy:
+    src: ./etc/mkinitcpio.conf
+    dest: /etc/mkinitcpio.conf
+    mode: 0644
+    directory_mode: 0755
+    owner: "root"
+    group: "root"
+  become: yes
+
+- name: Get UUID for main hard disk
+  ansible.builtin.command: blkid /dev/nvme0n1p2 -s UUID -o value
+  register: uuid
+  become: yes
+
+- name: Write cmdline
+  ansible.builtin.copy:
+    dest: /etc/kernel/cmdline
+    content: "quiet splash rd.luks.name={{ uuid.stdout.split()[0] }}=root root=/dev/mapper/root rw rootfstype=ext4"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Recreate initcpio
+  ansible.builtin.command: mkinitcpio -P
+  become: yes

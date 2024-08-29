@@ -1,0 +1,5 @@
+---
+- name: Install pacman base packages.
+  pacman:
+    name: "{{ sway_pkgs }}"
+  become: yes

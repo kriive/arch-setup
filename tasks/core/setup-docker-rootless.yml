@@ -1,0 +1,20 @@
+---
+- name: Enable remapping user id for Docker rootless.
+  ansible.builtin.lineinfile:
+    path: /etc/subuid
+    line: "{{ user_name }}:165536:65536"
+    create: yes
+
+- name: Enable remapping group id for Docker rootless.
+  ansible.builtin.lineinfile:
+    path: /etc/subgid
+    line: "{{ user_name }}:165536:65536"
+    create: yes
+
+- name: Enable Docker user service.
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+    state: started
+    scope: user
+  become_user: "{{ user_name }}"

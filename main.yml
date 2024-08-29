@@ -1,0 +1,50 @@
+---
+- hosts: localhost
+  connection: local
+
+  pre_tasks:
+  - name: Include common variables.
+    include_vars: vars/common.yml
+
+  - name: Include Arch base pkgs.
+    include_vars: vars/arch-base-pkgs.yml
+
+  - name: Include Arch sway pkgs.
+    include_vars: vars/arch-sway-pkgs.yml
+
+  - name: Include Arch AUR pkgs.
+    include_vars: vars/arch-aur-pkgs.yml
+
+  tasks:
+  - name: Remove archinstall logs
+    include_tasks: tasks/core/setup-remove-archinstall-logs.yml
+  
+  - name: Setup AUR user.
+    include_tasks: tasks/core/setup-aur-user.yml
+
+  - name: Setup paru AUR helper.
+    include_tasks: tasks/core/setup-paru.yml
+
+  - name: Install base packages.
+    include_tasks: tasks/core/setup-pacman-pkgs-base.yml
+
+  - name: Install sway packages.
+    include_tasks: tasks/core/setup-pacman-pkgs-sway.yml
+
+  - name: Install AUR packages.
+    include_tasks: tasks/core/setup-aur-pkgs.yml
+
+  - name: Remove AUR user.
+    include_tasks: tasks/core/setup-remove-aur-user.yml
+
+  - name: Install Docker rootless.
+    include_tasks: tasks/core/setup-docker-rootless.yml
+
+  - name: Install user dotfiles and user services.
+    include_tasks: tasks/core/setup-dotfiles-user-services.yml
+
+  - name: Install system boot files and plymouth.
+    include_tasks: tasks/core/setup-system-and-boot.yml
+
+  - name: Enable hardened_malloc globally.
+    include_tasks: tasks/core/setup-enable-hardened-malloc.yml

@@ -1,0 +1,7 @@
+---
+- name: Enable hardened_malloc globally
+  ansible.builtin.lineinfile:
+    path: /etc/ld.so.preload
+    line: '/usr/lib/libhardened_malloc.so'
+    create: yes
+  become: yes

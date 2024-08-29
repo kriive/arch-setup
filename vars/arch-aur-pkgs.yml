@@ -1,0 +1,9 @@
+---
+aur_pkgs:
+- tofi
+- networkmanager-dispatcher-chrony
+- nnn-nerd
+- swayosd-git
+- hardened_malloc
+- docker-rootless-extras
+- chayang-git

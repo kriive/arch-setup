@@ -1,0 +1,5 @@
+---
+- name: Remove archinstall logs 
+  ansible.builtin.file:
+    path: /var/log/archinstall
+    state: absent

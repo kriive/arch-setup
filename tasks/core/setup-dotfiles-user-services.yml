@@ -1,0 +1,73 @@
+---
+- name: Copy the .config folder.
+  ansible.builtin.copy:
+    # Use trailing slash to copy only the content of the folder.
+    src: ./home/kriive/.config/
+    dest: "/home/{{ user_name }}/.config"
+    mode: 0744
+    directory_mode: 0700
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: Create .ssh if not present.
+  file:
+    path: "/home/{{ user_name }}/.ssh"
+    state: directory
+
+- name: Copy the ssh config file.
+  ansible.builtin.copy:
+    # Use trailing slash to copy only the content of the folder.
+    src: ./home/kriive/.ssh/config
+    dest: "/home/{{ user_name }}/.ssh/config"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: Enable gcr ssh user socket.
+  ansible.builtin.systemd:
+    name: gcr-ssh-agent.socket
+    enabled: yes
+    state: started
+    scope: user
+  become_user: "{{ user_name }}"
+
+- name: Enable gcr ssh user service.
+  ansible.builtin.systemd:
+    name: gcr-ssh-agent.service
+    enabled: yes
+    state: started
+    scope: user
+  become_user: "{{ user_name }}"
+
+- name: Enable backup user timer.
+  ansible.builtin.systemd:
+    name: backup.timer
+    daemon_reload: true
+    enabled: yes
+    state: started
+    scope: user
+  become_user: "{{ user_name }}"
+
+- name: Enable docker user service.
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+    state: started
+    scope: user
+  become_user: "{{ user_name }}"
+
+- name: Enable mako service.
+  ansible.builtin.systemd:
+    name: mako
+    enabled: yes
+    state: started
+    scope: user
+  become_user: "{{ user_name }}"
+
+- name: Enable foot server user service.
+  ansible.builtin.systemd:
+    name: foot-server
+    enabled: yes
+    state: started
+    scope: user
+  become_user: "{{ user_name }}"

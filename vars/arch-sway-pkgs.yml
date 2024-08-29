@@ -1,0 +1,45 @@
+---
+sway_pkgs:
+- ttf-joypixels
+- sbctl
+- ttf-jetbrains-mono-nerd
+- sway
+- polkit
+- swaylock
+- swayidle
+- swaybg
+# To enable screen sharing with pipewire.
+- xdg-desktop-portal-wlr
+- waybar
+- foot
+- wl-clipboard
+- slurp
+- grim
+- mako
+- pamixer
+- playerctl
+- plymouth
+- chromium
+- seahorse
+- gnome-keyring
+- mpv
+- zathura
+- zathura-pdf-mupdf
+- imv
+- nm-connection-editor
+# This is required to have GNOME Keyring working
+- network-manager-applet
+- greetd
+- greetd-tuigreet
+- telegram-desktop
+- firewalld
+# Enable audio from the laptop speakers
+- sof-firmware
+- bluez
+- bluez-utils
+- libnotify
+- intel-media-driver
+- vulkan-intel
+- wlsunset
+- autotiling
+- nwg-bar

@@ -1,0 +1,6 @@
+---
+- name: Install pacman base packages.
+  community.general.pacman:
+    name: "{{ base_pkgs }}"
+    state: present
+  become: yes
