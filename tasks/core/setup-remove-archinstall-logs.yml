@@ -3,3 +3,4 @@
   ansible.builtin.file:
     path: /var/log/archinstall
     state: absent
+  become: yes

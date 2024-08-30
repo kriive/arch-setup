@@ -4,12 +4,14 @@
     path: /etc/subuid
     line: "{{ user_name }}:165536:65536"
     create: yes
+  become: yes
 
 - name: Enable remapping group id for Docker rootless.
   ansible.builtin.lineinfile:
     path: /etc/subgid
     line: "{{ user_name }}:165536:65536"
     create: yes
+  become: yes
 
 - name: Enable Docker user service.
   ansible.builtin.systemd:
