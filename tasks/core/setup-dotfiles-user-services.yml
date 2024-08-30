@@ -9,10 +9,18 @@
     owner: "{{ user_name }}"
     group: "{{ user_name }}"
 
+- name: Enable wayland for chromium.
+  ansible.builtin.lineinfile:
+    path: /etc/ld.so.preload
+    line: '/usr/lib/libhardened_malloc.so'
+    create: yes
+  become: yes
 - name: Create .ssh if not present.
   file:
     path: "/home/{{ user_name }}/.ssh"
     state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
 
 - name: Copy the ssh config file.
   ansible.builtin.copy:

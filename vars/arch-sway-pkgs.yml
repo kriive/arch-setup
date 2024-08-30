@@ -1,9 +1,10 @@
 ---
 sway_pkgs:
 - ttf-joypixels
-- sbctl
 - ttf-jetbrains-mono-nerd
 - sway
+- fwupd
+- sbctl
 - polkit
 - swaylock
 - swayidle

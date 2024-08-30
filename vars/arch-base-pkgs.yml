@@ -20,9 +20,10 @@ base_pkgs:
 - man-pages
 - whois
 - unzip
-- fwupd
 - qemu-desktop
+- toolbox
 - docker
+- docker-compose
 - docker-buildx
 # This is only needed if you use linux-hardened as kernel,
 # since it doesn't enable CONFIG_USER_NS_UNPRIVILEGED, and breaks

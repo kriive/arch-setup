@@ -1,28 +1,8 @@
 ---
-- name: Copy the greetd folder to /etc.
+- name: Copy /etc.
   ansible.builtin.copy:
-    src: ./etc/greetd/
-    dest: /etc/greetd
-    mode: 0644
-    directory_mode: 0755
-    owner: "root"
-    group: "root"
-  become: yes
-
-- name: Copy chrony.conf to /etc/chrony.conf.
-  ansible.builtin.copy:
-    src: ./etc/chrony.conf
-    dest: /etc/chrony.conf
-    mode: 0644
-    directory_mode: 0755
-    owner: "root"
-    group: "root"
-  become: yes
-
-- name: Copy resolved.conf to /etc/systemd/resolved.conf.
-  ansible.builtin.copy:
-    src: ./etc/systemd/resolved.conf
-    dest: /etc/systemd/resolved.conf
+    src: ./etc/
+    dest: /etc
     mode: 0644
     directory_mode: 0755
     owner: "root"
@@ -37,15 +17,6 @@
     group: root
     mode: 0755
     directory_mode: 0755
-  become: yes
-
-- name: Copy greetd pam module.
-  ansible.builtin.copy:
-    src: ./etc/pam.d/greetd
-    dest: /etc/pam.d/greetd
-    owner: root
-    group: root
-    mode: 0644
   become: yes
 
 - name: Adding user to video group
@@ -105,25 +76,6 @@
     state: started
   become: yes
 
-- name: Copy the plymouth folder to /etc
-  ansible.builtin.copy:
-    src: ./etc/plymouth/
-    dest: /etc/plymouth
-    mode: 0644
-    directory_mode: 0755
-    owner: "root"
-  become: yes
-
-- name: Copy mkinitcpio.conf to /etc/mkinitcpio.conf
-  ansible.builtin.copy:
-    src: ./etc/mkinitcpio.conf
-    dest: /etc/mkinitcpio.conf
-    mode: 0644
-    directory_mode: 0755
-    owner: "root"
-    group: "root"
-  become: yes
-
 - name: Get UUID for main hard disk
   ansible.builtin.command: blkid /dev/nvme0n1p2 -s UUID -o value
   register: uuid
@@ -132,7 +84,7 @@
 - name: Write cmdline
   ansible.builtin.copy:
     dest: /etc/kernel/cmdline
-    content: "quiet splash rd.luks.name={{ uuid.stdout.split()[0] }}=root root=/dev/mapper/root rw rootfstype=ext4"
+    content: "quiet splash rd.luks.name={{ uuid.stdout.split()[0] }}=root root=/dev/mapper/root rw rootfstype=ext4 init_on_alloc=1 init_on_free=1 slab_nomerge page_alloc.shuffle=1 randomize_kstack_offset=on vsyscall=none lockdown=confidentiality random.trust_cpu=off random.trust_bootloader=off iommu=force intel_iommu=on iommu.passthrough=0 iommu.strict=1 pti=on module.sig_enforce=1 mitigations=auto,nosmt spectre_v2=on spec_store_bypass_disable=on l1d_flush=on gather_data_sampling=force"
     owner: root
     group: root
     mode: 0644
