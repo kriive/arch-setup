@@ -33,6 +33,12 @@
     enabled: no
   become: yes
 
+- name: Enable greetd.service.
+  ansible.builtin.systemd:
+    name: greetd
+    enabled: yes
+  become: yes
+
 - name: Enable and start chronyd.service.
   ansible.builtin.systemd:
     name: chronyd
