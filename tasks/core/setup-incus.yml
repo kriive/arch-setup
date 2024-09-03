@@ -1,0 +1,21 @@
+---
+- name: Enable remapping user id for Incus.
+  ansible.builtin.lineinfile:
+    path: /etc/subuid
+    line: "root:1000000:1000000000"
+    create: yes
+  become: yes
+
+- name: Enable remapping group id for Incus.
+  ansible.builtin.lineinfile:
+    path: /etc/subgid
+    line: "root:1000000:1000000000"
+    create: yes
+  become: yes
+
+- name: Enable Incus service.
+  ansible.builtin.systemd:
+    name: incus
+    enabled: yes
+    state: started
+  become_user: yes

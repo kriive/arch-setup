@@ -1,31 +1,31 @@
 ---
 base_pkgs:
-- fish
-- restic
-- wireshark-qt
-- helix
-- lsd
 - bat
+- chrony
+- docker
+- docker-buildx
+- docker-compose
+- duf
+- dust
+- fish
+- fisher
+- go
+- gopls
+- helix
+- incus
+- lsd
+- man-db
+- man-pages
+- qemu-desktop
+- restic
 - ripgrep
 - rsync
 - tailscale
-- chrony
-- fisher
-- dust
-- duf
-- go
-- gopls
 - tmux
-- man-db
-- man-pages
-- whois
-- unzip
-- qemu-desktop
 - toolbox
-- docker
-- docker-compose
-- docker-buildx
-# This is only needed if you use linux-hardened as kernel,
+- unzip
+- whois
+- wireshark-qt# This is only needed if you use linux-hardened as kernel,
 # since it doesn't enable CONFIG_USER_NS_UNPRIVILEGED, and breaks
 # docker rootless.
 - fuse-overlayfs

@@ -37,6 +37,9 @@
   - name: Remove AUR user.
     include_tasks: tasks/core/setup-remove-aur-user.yml
 
+  - name: Setup Incus.
+    include_tasks: tasks/core/setup-incus.yml
+
   - name: Install Docker rootless.
     include_tasks: tasks/core/setup-docker-rootless.yml
 
