@@ -2,6 +2,7 @@
 base_pkgs:
 - bat
 - chrony
+- crun
 - docker
 - docker-buildx
 - docker-compose
@@ -16,6 +17,7 @@ base_pkgs:
 - lsd
 - man-db
 - man-pages
+- podman
 - qemu-desktop
 - restic
 - ripgrep
@@ -25,7 +27,7 @@ base_pkgs:
 - toolbox
 - unzip
 - whois
-- wireshark-qt# This is only needed if you use linux-hardened as kernel,
+# This is only needed if you use linux-hardened as kernel,
 # since it doesn't enable CONFIG_USER_NS_UNPRIVILEGED, and breaks
 # docker rootless.
 - fuse-overlayfs
